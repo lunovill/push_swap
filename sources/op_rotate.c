@@ -18,6 +18,8 @@ int	op_rotate(t_pile *p, int set)
 
 	if (!p)
 		return (-1);
+	if (p->size == 1)
+		return (0);
 	tmp = p->first;
 	p->first = p->first->next;
 	p->last = tmp;

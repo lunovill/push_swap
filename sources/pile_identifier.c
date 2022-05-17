@@ -19,8 +19,6 @@ void	pile_identifier(t_pile *p)
 	t_case			*current;
 	t_case			*next;
 
-	if (!p)
-		return ;
 	p->min->id = 0;
 	p->max->id = p->size - 1;
 	id = 0;

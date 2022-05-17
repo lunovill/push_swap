@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pile_update.c                                      :+:      :+:    :+:   */
+/*   ft_three.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lunovill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/12 10:19:25 by lunovill          #+#    #+#             */
-/*   Updated: 2022/04/12 10:19:26 by lunovill         ###   ########.fr       */
+/*   Created: 2022/04/13 03:54:37 by lunovill          #+#    #+#             */
+/*   Updated: 2022/04/13 03:54:49 by lunovill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_pile	*pile_update(t_pile *p)
+void	ft_three(t_pile *a)
 {
-	if (!p || p->size == 0)
-		return (NULL);
-	ft_index(p);
-	p->min = pile_min(p->first, p->first);
-	p->max = pile_max(p->first, p->first);
-	return (p);
+	if ((a->first->id == 1 && a->last->id == 2)
+		|| (a->first->id == 2 && a->last->id == 0)
+		|| (a->first->id == 0 && a->last->id == 1))
+		op_swap(a);
 }

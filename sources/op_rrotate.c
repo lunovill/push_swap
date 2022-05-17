@@ -18,6 +18,8 @@ int	op_rrotate(t_pile *p, int set)
 
 	if (!p)
 		return (-1);
+	if (p->size == 1)
+		return (0);
 	tmp = p->last->befor;
 	p->first = p->last;
 	p->last = tmp;

@@ -12,47 +12,6 @@
 
 #include "push_swap.h"
 
-/*void	pile_print(t_pile a, t_pile b)
-  {
-  unsigned int	i;
-  unsigned int	j;
-
-  i = 0;
-  j = 0;
-  if (a.size < b.size && i == 0)
-  while (j < (b.size - a.size))
-  {
-  ft_putstr("\t\t");
-  if (b.tab[j] >= 0)
-  ft_putchar(' ');
-  ft_putnbr(b.tab[j++]);
-  ft_putstr("\n");
-  }
-  if (a.size > b.size && j == 0)
-  while (i < (a.size - b.size))
-  {
-  if (a.tab[i] >= 0)
-  ft_putchar(' ');
-  ft_putnbr(a.tab[i++]);
-  ft_putstr("\t\t\t\n");
-  }
-  while (i < a.size && j < b.size)
-  {
-  if (a.tab[i] >= 0)
-  ft_putchar(' ');
-  ft_putnbr(a.tab[i++]);
-  ft_putstr("\t\t");
-  if (b.tab[j] >= 0)
-  ft_putchar(' ');
-  ft_putnbr(b.tab[j++]);
-  ft_putstr("\n");
-  }
-  ft_putstr("---------\t---------\n");
-  ft_putstr("    a    \t    b    \n");
-  return;
-  }
-  */
-
 int	main(int ac, char **av)
 {
 	if (ac == 1)

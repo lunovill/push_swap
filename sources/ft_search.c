@@ -6,7 +6,7 @@
 /*   By: lunovill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 14:14:22 by lunovill          #+#    #+#             */
-/*   Updated: 2022/03/21 01:42:44 by lunovill         ###   ########.fr       */
+/*   Updated: 2022/04/12 10:15:30 by lunovill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ static t_case	*ft_next(t_case *start, t_case *end, size_t len)
 
 	if (start == pile_max(start, end))
 		return (pile_min(start, end));
-	i = 1;
-	while (i < len - 1)
+	i = 0;
+	while (++i < len)
 	{
 		current = start->next;
 		while (current != end)
@@ -58,16 +58,15 @@ static t_case	*ft_next(t_case *start, t_case *end, size_t len)
 				return (current);
 			current = current->next;
 		}
-		i++;
 	}
 	return (current);
 }
 
 static int	ft_calcul(t_pile *p, t_case *start)
 {
-	t_case			*next;
-	t_case			*tmp;
-	int pb;
+	t_case	*next;
+	t_case	*tmp;
+	int		pb;
 
 	if (p->size == 2)
 		return (1);
@@ -85,15 +84,13 @@ static int	ft_calcul(t_pile *p, t_case *start)
 
 int	ft_search(t_pile *p)
 {
-	t_case			*first;
-	t_case			*current;
-	// unsigned int	min;
-	// unsigned int	tmp;
-	int	min;
-	int	tmp;
-	// int				pb;
+	t_case	*first;
+	t_case	*current;
+	int		min;
+	int		tmp;
 
-	// pb = 0;
+	if (p->size == 2)
+		return (0);
 	first = p->first;
 	current = first->next;
 	min = ft_calcul(p, first);
@@ -109,6 +106,4 @@ int	ft_search(t_pile *p)
 	}
 	ft_pb(p->first, p->first, 1);
 	return (ft_calcul(p, first));
-	//ft_printf("solution : %u, %u\n", first->index, min);
-	// return (pb);
 }

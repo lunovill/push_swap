@@ -6,7 +6,7 @@
 /*   By: lunovill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 17:12:31 by lunovill          #+#    #+#             */
-/*   Updated: 2022/03/12 17:39:10 by lunovill         ###   ########.fr       */
+/*   Updated: 2022/05/17 21:05:42 by lunovill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	check_args(char **args)
 	while (args[i])
 	{
 		j = 0;
-		if (args[i][0] == '-')
+		if (args[i][0] == '-' && args[i][1] != '\0')
 			j++;
 		while (args[i][j])
 			if (ft_strichr("0123456789", args[i][j++]) == -1)

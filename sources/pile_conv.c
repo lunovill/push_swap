@@ -12,6 +12,14 @@
 
 #include "push_swap.h"
 
+static void	pile_conv2(t_pile *pile, t_case *current)
+{
+	pile->name = 'a';
+	pile->first->befor = current;
+	current->next = pile->first;
+	pile = pile_update(pile);
+}
+
 t_pile	*pile_conv(char **args)
 {
 	t_case			*current;
@@ -34,11 +42,7 @@ t_pile	*pile_conv(char **args)
 		lst_add(pile, current, new);
 		current = new;
 	}
-	pile->name = 'a';
-	pile->first->befor = current;
-	current->next = pile->first;
+	pile_conv2(pile, current);
 	pile->size = i;
-	pile->min = pile_min(pile->first, pile->first);
-	pile->max = pile_max(pile->first, pile->first);
 	return (pile);
 }

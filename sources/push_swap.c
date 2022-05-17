@@ -24,10 +24,9 @@ int	push_swap(char **args)
 	if (pile_is_sort(a) == 0)
 		return (0);
 	pile_identifier(a);
-	b = pile_b(a, b);
+	if (a->size > 3)
+		b = pile_b(a, b);
 	pile_sort(a, b);
-	// lst_print(a);
-	// lst_print(b);
 	pile_free(a);
 	return (0);
 }

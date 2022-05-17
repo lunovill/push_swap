@@ -6,70 +6,94 @@
 #    By: lunovill <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/12 17:41:30 by lunovill          #+#    #+#              #
-#    Updated: 2022/03/12 17:41:32 by lunovill         ###   ########.fr        #
+#    Updated: 2022/05/17 21:28:45 by lunovill         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = sources/main.c\
-	sources/check_all.c\
-	sources/ft_search.c\
-	sources/ft_pile_cal.c\
-	sources/ft_index.c\
-	sources/lst_add.c\
-	sources/lst_init.c\
-	sources/lst_new.c\
-	sources/lst_print.c\
-	sources/lst_rmv.c\
-	sources/op_push.c\
-	sources/op_rotate.c\
-	sources/op_rotate_all.c\
-	sources/op_rrotate.c\
-	sources/op_rrotate_all.c\
-	sources/op_swap.c\
-	sources/pile_b.c\
-	sources/pile_conv.c\
-	sources/pile_free.c\
-	sources/pile_min.c\
-	sources/pile_max.c\
-	sources/pile_identifier.c\
-	sources/pile_is_sort.c\
-	sources/pile_sort.c\
-	sources/pile_update.c\
-	sources/push_swap.c\
+ #=============================================================================#
+#								SOURCES											#
+ #=============================================================================#
+ 
+SRCS_DIR = sources
+SRC_FILES = main\
+		check_all\
+		ft_search\
+		ft_search_pa\
+		ft_three\
+		ft_index\
+		ft_next_pa\
+		lst_add\
+		lst_init\
+		lst_new\
+		lst_print\
+		lst_rmv\
+		op_push\
+		op_rotate\
+		op_rotate_all\
+		op_rrotate\
+		op_rrotate_all\
+		op_swap\
+		pile_b\
+		pile_conv\
+		pile_free\
+		pile_min\
+		pile_max\
+		pile_identifier\
+		pile_is_sort\
+		pile_sort\
+		pile_update\
+		push_swap\
 
-OBJS = $(SRCS:.c=.o)
-OBJS_DIR = objects
+SRCS = $(addsuffix .c, $(SRC_FILES))
+
+ #=============================================================================#
+#									OBJETS										#
+ #=============================================================================#
+
+OBJS_DIR = objets
+OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)
+
+ #=============================================================================#
+#									LIBRARY										#
+ #=============================================================================#
+
+LIBS_DIR = libft
+LIBS = libft.a
+
+ #=============================================================================#
+#									COMPILATION									#
+ #=============================================================================#
+
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror
+CIFLAGS = -Iincludes -I$(LIBS_DIR)/includes
+CLFLAGS = -L$(LIBS_DIR) -lft
+
+ #=============================================================================#
+#									MAKEFILE									#
+ #=============================================================================#
 
 NAME = push_swap
 
-CC = gcc
-CFLAGS = -Wall -Werror -Wextra
-CPPFLAGS = -Ilibft/includes -Iincludes
-LIBS = libft/libft.a
+all: $(NAME)
 
-all : compilation $(NAME) $(OBJS_DIR)
-
-compilation :
-	@$(MAKE) -C ./libft
-
-$(NAME): $(OBJS)
-	@$(CC) $(CFLAGS) $(CPPFLAGS) $(OBJS) $(LIBS) -o $(NAME)
-
-%.o : %.c
-	@$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $@
+$(NAME): $(OBJS_DIR) $(OBJS)
+	$(MAKE) -C $(LIBS_DIR)
+	$(CC) $(CFLAGS) $(CIFLAGS) $(OBJS) $(CLFLAGS) -o $(NAME)
 
 $(OBJS_DIR) :
-	@mkdir $(OBJS_DIR)
-	@mv $(OBJS) $(OBJS_DIR)
+	mkdir $(OBJS_DIR)
 
+$(OBJS) : $(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c
+	$(CC) $(CFLAGS) $(CIFLAGS) -c $< -o $@
 clean :
-	@$(MAKE) clean -C ./libft
-	@rm -r $(OBJS_DIR)
+	$(MAKE) clean -C $(LIBS_DIR)
+	rm -rf $(OBJS_DIR)
 
-fclean : clean
-	@$(MAKE) fclean -C ./libft
-	@rm $(NAME)
-
+fclean: clean
+	$(MAKE) fclean -C $(LIBS_DIR)
+	rm -rf $(NAME)
+	rm -rf $(NAME_BONUS)
 re : fclean all
 
-.PHONY: all clean fclean re
+.PHONY: clean fclean all re
