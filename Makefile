@@ -5,18 +5,17 @@
 #                                                     +:+ +:+         +:+      #
 #    By: lunovill <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/03/12 17:41:30 by lunovill          #+#    #+#              #
-#    Updated: 2022/05/17 21:28:45 by lunovill         ###   ########.fr        #
+#    Created: 2022/09/15 05:19:02 by lunovill          #+#    #+#              #
+#    Updated: 2022/10/02 18:02:27 by lunovill         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
  #=============================================================================#
 #								SOURCES											#
  #=============================================================================#
- 
+
 SRCS_DIR = sources
-SRC_FILES = main\
-		check_all\
+SRC_FILES = check_all\
 		ft_search\
 		ft_search_pa\
 		ft_three\
@@ -27,6 +26,7 @@ SRC_FILES = main\
 		lst_new\
 		lst_print\
 		lst_rmv\
+		main\
 		op_push\
 		op_rotate\
 		op_rotate_all\
@@ -36,8 +36,8 @@ SRC_FILES = main\
 		pile_b\
 		pile_conv\
 		pile_free\
-		pile_min\
 		pile_max\
+		pile_min\
 		pile_identifier\
 		pile_is_sort\
 		pile_sort\
@@ -46,54 +46,94 @@ SRC_FILES = main\
 
 SRCS = $(addsuffix .c, $(SRC_FILES))
 
+SRCS_DIR_BONUS = bonus
+SRC_FILES_BONUS = check_all\
+					checker\
+					ft_index\
+					lst_add\
+					lst_init\
+					lst_new\
+					lst_print\
+					lst_rmv\
+					op_push\
+					op_rotate\
+					op_rrotate\
+					op_swap\
+					pile_conv\
+					pile_free\
+					pile_max\
+					pile_min\
+					pile_is_sort\
+
+SRCS_BONUS = $(addsuffix .c, $(SRC_FILES_BONUS))
+
  #=============================================================================#
 #									OBJETS										#
  #=============================================================================#
 
 OBJS_DIR = objets
 OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)
+OBJS_DIR_BONUS = objets_bonus
+OBJS_BONUS = $(SRCS_BONUS:%.c=$(OBJS_DIR_BONUS)/%.o)
 
  #=============================================================================#
 #									LIBRARY										#
  #=============================================================================#
 
-LIBS_DIR = libft
-LIBS = libft.a
+LIBFT_DIR = libft
 
  #=============================================================================#
 #									COMPILATION									#
  #=============================================================================#
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
-CIFLAGS = -Iincludes -I$(LIBS_DIR)/includes
-CLFLAGS = -L$(LIBS_DIR) -lft
+CFLAGS = -Wall -Wextra -Werror -g
+CDFLAGS = -MMD -MP
+CIFLAGS = -Iincludes -I$(LIBFT_DIR)/includes
+LIBFLAGS = -L$(LIBFT_DIR) -lft
 
  #=============================================================================#
 #									MAKEFILE									#
  #=============================================================================#
 
 NAME = push_swap
+NAME_BONUS = checker
 
-all: $(NAME)
+all : $(NAME)
 
-$(NAME): $(OBJS_DIR) $(OBJS)
-	$(MAKE) -C $(LIBS_DIR)
-	$(CC) $(CFLAGS) $(CIFLAGS) $(OBJS) $(CLFLAGS) -o $(NAME)
+$(NAME) : $(OBJS_DIR) $(OBJS)
+	$(CC) $(CFLAGS) $(CIFLAGS) $(OBJS) $(LIBFLAGS) -o $(NAME)
 
 $(OBJS_DIR) :
+	$(MAKE) -C $(LIBFT_DIR)
 	mkdir $(OBJS_DIR)
 
-$(OBJS) : $(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c
-	$(CC) $(CFLAGS) $(CIFLAGS) -c $< -o $@
+$(OBJS) : $(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c ./includes/$(NAME).h
+	$(CC) $(CFLAGS) $(CDFLAGS) $(CIFLAGS) -c $< -o $@
+
+bonus : $(NAME_BONUS)
+
+$(OBJS_DIR_BONUS) :
+	$(MAKE) -C $(LIBFT_DIR)
+	mkdir $(OBJS_DIR_BONUS)
+
+$(NAME_BONUS) : $(OBJS_DIR_BONUS) $(OBJS_BONUS)
+	$(MAKE) -C $(LIBFT_DIR)
+	$(CC) $(CFLAGS) $(CIFLAGS) $(OBJS_BONUS) $(LIBFLAGS) -o $(NAME_BONUS)
+
+$(OBJS_BONUS) : $(OBJS_DIR_BONUS)/%.o : $(SRCS_DIR_BONUS)/%.c ./includes/$(NAME_BONUS).h
+	$(CC) $(CFLAGS) $(CDFLAGS) $(CIFLAGS) -c $< -o $@
+
 clean :
-	$(MAKE) clean -C $(LIBS_DIR)
+	$(MAKE) clean -C $(LIBFT_DIR)
 	rm -rf $(OBJS_DIR)
+	rm -rf $(OBJS_DIR_BONUS)
 
 fclean: clean
-	$(MAKE) fclean -C $(LIBS_DIR)
+	$(MAKE) fclean -C $(LIBFT_DIR)
 	rm -rf $(NAME)
 	rm -rf $(NAME_BONUS)
+
 re : fclean all
 
-.PHONY: clean fclean all re
+.PHONY: all bonus clean fclean re

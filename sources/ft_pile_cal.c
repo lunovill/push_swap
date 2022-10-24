@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_pile_cal.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lunovill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/23 18:58:14 by lunovill          #+#    #+#             */
+/*   Updated: 2022/10/23 18:58:52 by lunovill         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 static int	ft_pb(t_case *start, t_case *end, int set)
@@ -35,8 +47,8 @@ static t_case	*ft_next(t_case *start, t_case *end)
 
 	current = start->next;
 	if (current != pile_max(start, end))
-	while (current->nb < start->nb && current != end)
-		current = current->next;
+		while (current->nb < start->nb && current != end)
+			current = current->next;
 	else
 		return (start->next);
 	return (current);
